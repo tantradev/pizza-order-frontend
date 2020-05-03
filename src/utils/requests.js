@@ -1,6 +1,6 @@
 import axios from "axios";
-
-const getUrl = endpoint => process.env.REACT_APP_API_URL + endpoint;
+import { REACT_APP_API_URL } from './config'
+const getUrl = endpoint => REACT_APP_API_URL + endpoint;
 
 export const post = async (endpoint, data) => {
     const url = getUrl(endpoint);
