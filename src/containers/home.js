@@ -75,7 +75,6 @@ class Home extends Component {
   state = {
     activeStep: 0,
     showSuccessfulMsg: false
-
   }
 
 
@@ -122,7 +121,9 @@ class Home extends Component {
   onMakeOrder = async () => {
     let { name, email, phoneNumber, address } = this.state
     let body = { name, email, phoneNumber, address }
-
+    this.setState({
+      totalFinal: this.props.total
+    })
     let postClient = await post('/clients', body)
     let bodyOrders = {
       clientId: postClient.data.id,
@@ -135,7 +136,7 @@ class Home extends Component {
         orderId: postOrder.data.id,
         item: next.name,
         extras: getExtras.join() || 'none',
-        price: next.totalPrice
+        price: next.totalPrice !== 0 ? next.totalPrice : next.price
       }
     })
     let postSelectedItems = await post('/orderItems', { bodyItems: bodyItems })
@@ -144,7 +145,7 @@ class Home extends Component {
         showSuccessfulMsg: true
       })
     }
-
+    this.props.calculateTotal(0);
   }
 
   renderActionButtons = () => {
@@ -219,7 +220,7 @@ class Home extends Component {
     const { classes } = this.props
     return (
       <div className={classes.messageWrapper}>
-        <Alert severity="success" className={classes.messageBoxWrapper}>Your Order is done Successfuly!</Alert>
+        <Alert severity="success" className={classes.messageBoxWrapper}>Your Order is done Successfuly! Your total price:  {this.state.totalFinal}€</Alert>
       </div>
     )
   }

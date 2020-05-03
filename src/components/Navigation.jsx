@@ -3,6 +3,7 @@ import { Grid, withStyles } from '@material-ui/core'
 import { connect } from 'react-redux'
 import NavigationList from './NavigationList'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+
 const useStyles = theme => ({
     list: {
         display: 'flex',
